@@ -135,3 +135,103 @@ Effective circuit analysis often relies on simplifying the circuit before applyi
         *   Rc = (R1*R2 + R2*R3 + R3*R1) / R2
 
 By applying these simplification techniques, a complex circuit can often be reduced to a form where methods like nodal analysis, mesh analysis, or the superposition theorem can be applied more easily.
+
+## 8. Controlled Sources in Analysis
+
+**Theory:**
+Controlled (or dependent) sources are voltage or current sources whose values depend on a voltage or current elsewhere in the circuit. They are fundamental components in modeling active devices like transistors and operational amplifiers.
+
+There are four types of controlled sources:
+1.  **Voltage-Controlled Voltage Source (VCVS):** Output voltage is proportional to an input voltage (e.g., A * Vx).
+2.  **Current-Controlled Voltage Source (CCVS):** Output voltage is proportional to an input current (e.g., r * Ix).
+3.  **Voltage-Controlled Current Source (VCCS):** Output current is proportional to an input voltage (e.g., g * Vx).
+4.  **Current-Controlled Current Source (CCCS):** Output current is proportional to an input current (e.g., β * Ix).
+
+**Analysis with Controlled Sources:**
+When applying nodal or mesh analysis to circuits with controlled sources:
+*   Treat the controlled source like an independent source initially, but express its value in terms of the controlling voltage or current.
+*   The controlling variable must be one of the node voltages (for VCVS, VCCS) or mesh currents (for CCVS, CCCS) that you are solving for, or it must be expressible in terms of them.
+*   This will result in a system of equations where the controlled source terms are functions of other unknown variables, making the system coupled.
+*   Solve the resulting system of linear equations to find all unknown voltages and currents.
+
+## 9. Transient Analysis of First-Order Circuits
+
+**Theory:**
+Transient analysis deals with the behavior of circuits containing energy storage elements (capacitors and inductors) when there is a sudden change in the circuit, such as switching a voltage or current source on or off. First-order circuits contain only one energy storage element (either one capacitor or one inductor) and can be described by a first-order differential equation.
+
+The general form of the solution for a first-order circuit variable (voltage or current) is:
+x(t) = x_final + (x_initial - x_final) * e^(-t/τ)
+
+Where:
+*   x(t): The variable (voltage or current) at time t.
+*   x_initial: The initial value of the variable just before the change (at t=0- or t=0+).
+*   x_final: The final (steady-state) value of the variable as t approaches infinity.
+*   τ (tau): The time constant of the circuit.
+
+## 10. Natural and Step Response of RL Circuits
+
+### Natural Response of an RL Circuit
+**Theory:**
+The natural response occurs when the circuit's independent sources are suddenly turned off, and the stored energy in the inductor is allowed to dissipate through the resistive part of the circuit.
+
+Consider an inductor L initially storing energy, connected to a resistor R.
+The differential equation is: L(di/dt) + Ri = 0
+The solution for the current i(t) is:
+i(t) = I_0 * e^(-t/τ) for t ≥ 0
+Where:
+*   I_0: Initial current in the inductor at t=0.
+*   τ = L/R: The time constant for an RL circuit.
+
+**Statement:**
+> The natural response of an RL circuit is an exponential decay of the inductor current with a time constant τ = L/R.
+
+### Step Response of an RL Circuit
+**Theory:**
+The step response occurs when a DC voltage source is suddenly applied to an RL circuit (e.g., by closing a switch).
+
+Consider an inductor L and resistor R connected in series with a DC voltage source Vs.
+The differential equation is: L(di/dt) + Ri = Vs
+The solution for the current i(t) is:
+i(t) = (Vs/R) + (I_0 - Vs/R) * e^(-t/τ) for t ≥ 0
+If the inductor is initially uncharged (I_0 = 0), then:
+i(t) = (Vs/R) * (1 - e^(-t/τ)) for t ≥ 0
+
+The voltage across the inductor is:
+v_L(t) = Vs * e^(-t/τ) for t ≥ 0 (assuming I_0 = 0)
+
+**Statement:**
+> The step response of an RL circuit describes how the inductor current rises exponentially from its initial value to a final steady-state value (Vs/R) with a time constant τ = L/R. The inductor voltage decays exponentially.
+
+## 11. Natural and Step Response of RC Circuits
+
+### Natural Response of an RC Circuit
+**Theory:**
+The natural response occurs when a charged capacitor is allowed to discharge through a resistor, with no independent sources connected.
+
+Consider a capacitor C initially charged to V_0, connected to a resistor R.
+The differential equation is: C(dv/dt) + v/R = 0
+The solution for the capacitor voltage v(t) is:
+v(t) = V_0 * e^(-t/τ) for t ≥ 0
+Where:
+*   V_0: Initial voltage across the capacitor at t=0.
+*   τ = RC: The time constant for an RC circuit.
+
+**Statement:**
+> The natural response of an RC circuit is an exponential decay of the capacitor voltage with a time constant τ = RC.
+
+### Step Response of an RC Circuit
+**Theory:**
+The step response occurs when a DC voltage source is suddenly applied to an RC circuit.
+
+Consider a capacitor C and resistor R connected in series with a DC voltage source Vs.
+The differential equation for the capacitor voltage is: C(dv/dt) + v/R = Vs/R
+The solution for the capacitor voltage v(t) is:
+v(t) = Vs + (V_0 - Vs) * e^(-t/τ) for t ≥ 0
+If the capacitor is initially uncharged (V_0 = 0), then:
+v(t) = Vs * (1 - e^(-t/τ)) for t ≥ 0
+
+The current through the circuit is:
+i(t) = (Vs/R) * e^(-t/τ) for t ≥ 0 (assuming V_0 = 0)
+
+**Statement:**
+> The step response of an RC circuit describes how the capacitor voltage rises exponentially from its initial value to a final steady-state value (Vs) with a time constant τ = RC. The circuit current decays exponentially.
